@@ -1,0 +1,33 @@
+name: Sync Staging to Live
+
+on:
+  repository_dispatch:
+    types: [sync-staging-to-live]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Git
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+
+      - name: Checkout staging branch
+        run: git checkout staging
+
+      - name: Merge changes into live branch
+        run: |
+          git checkout live
+          git merge staging --no-ff --commit -m "Merge changes from staging to live"
+          git push origin live
+            git add -A
+            git diff-index --quiet HEAD || git commit -am "Deploy files" # Commit changes to the repository if there are modifications
+            git push origin $branch  # Push changes to the remote branch
+          done
