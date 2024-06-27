@@ -23,9 +23,12 @@ jobs:
       - name: Checkout staging branch
         run: git checkout staging
 
-      - name: Merge changes into live branch
+      - name: Checkout main branch
         run: |
           git checkout live
+          
+      - name: Merge changes into live branch
+        run: |
           git merge staging --no-ff --commit -m "Merge changes from staging to live"
 
       - name: Push changes to live branch
