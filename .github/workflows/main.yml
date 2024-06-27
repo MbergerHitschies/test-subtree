@@ -3,7 +3,7 @@ name: Sync Staging to Live
 on:
   repository_dispatch:
     types: [sync-staging-to-live]
-
+  workflow_dispatch:
 jobs:
   sync:
     runs-on: ubuntu-latest
